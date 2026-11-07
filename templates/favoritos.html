@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block titulo %}Favoritos{% endblock %}
+{% block conteudo %}
+<h1>Favoritos</h1>
+<div class="grade">
+  {% for fav in favoritos %}
+  <article class="card">
+    <a href="{% url 'livro' fav.livro.pk %}">
+      <div class="capa {{ fav.livro.classe_capa }}"><span>{{ fav.livro.titulo }}</span></div>
+      <h3>{{ fav.livro.titulo }}</h3>
+    </a>
+    <p class="preco">R$ {{ fav.livro.preco_final }}</p>
+    <form method="post" action="{% url 'alternar_favorito' fav.livro.pk %}" data-confirma="Remover dos favoritos?">
+      {% csrf_token %}
+      <input type="hidden" name="next" value="{% url 'favoritos' %}">
+      <button class="link">Remover</button>
+    </form>
+  </article>
+  {% empty %}
+  <p class="vazio">Nenhum favorito ainda. Toque no coração de um livro para guardá-lo aqui.</p>
+  {% endfor %}
+</div>
+<h2 class="secao">Minha estante</h2>
+<div class="estante">
+  {% for nome, itens in colunas %}
+  <section class="coluna">
+    <h3>{{ nome }}</h3>
+    {% for item in itens %}<a href="{% url 'livro' item.livro.pk %}">{{ item.livro.titulo }}</a>{% empty %}<p class="vazio">Nenhum livro aqui.</p>{% endfor %}
+  </section>
+  {% endfor %}
+</div>
+{% endblock %}

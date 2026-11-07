@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block titulo %}Minha conta{% endblock %}
+{% block conteudo %}
+<h1>Minha conta</h1>
+<section class="duas">
+  <form method="post" class="formulario">
+    {% csrf_token %}
+    <h2>Configurações do perfil</h2>
+    {{ perfil.as_p }}
+    <button class="botao" name="salvar_perfil" value="1">Salvar dados</button>
+  </form>
+  <form method="post" class="formulario">
+    {% csrf_token %}
+    <h2>Trocar senha</h2>
+    {{ senha.as_p }}
+    <button class="botao secundario" name="trocar_senha" value="1">Alterar senha</button>
+  </form>
+</section>
+<h2 class="secao">Meus pedidos</h2>
+{% for pedido in pedidos %}
+  <div class="pedido">
+    <strong>Pedido #{{ pedido.pk }}</strong> · {{ pedido.criado_em|date:"d/m/Y" }} · {{ pedido.get_status_display }} · R$ {{ pedido.total }}
+  </div>
+{% empty %}
+  <p class="vazio">Você ainda não fez pedidos.</p>
+{% endfor %}
+<h2 class="secao">Minhas indicações</h2>
+{% for post in avaliacoes %}
+  <div class="pedido"><strong>{{ post.livro.titulo }}</strong> · nota {{ post.nota }}/5<p>{{ post.texto }}</p></div>
+{% empty %}
+  <p class="vazio">Nenhuma indicação publicada no Clube.</p>
+{% endfor %}
+{% endblock %}

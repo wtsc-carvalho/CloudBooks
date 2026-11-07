@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block titulo %}Clube de leitura{% endblock %}
+{% block conteudo %}
+<h1>Clube de leitura</h1>
+<section class="rankings">
+  <div>
+    <h2>Livro do mês</h2>
+    {% if do_mes %}<a href="{% url 'livro' do_mes.pk %}">{{ do_mes.titulo }}</a>{% else %}<p>Nenhuma indicação neste mês.</p>{% endif %}
+  </div>
+  <div>
+    <h2>Mais lidos</h2>
+    <ol>{% for livro in mais_lidos %}<li><a href="{% url 'livro' livro.pk %}">{{ livro.titulo }}</a></li>{% empty %}<li>Nenhuma leitura registrada ainda.</li>{% endfor %}</ol>
+  </div>
+</section>
+<section class="feed">
+  {% for post in posts %}
+  <article class="post">
+    <div class="capa {{ post.livro.classe_capa }}"><span>{{ post.livro.titulo }}</span></div>
+    <div>
+      <p class="autor">@{{ post.usuario.username }} · nota {{ post.nota }}/5</p>
+      <h3><a href="{% url 'livro' post.livro.pk %}">{{ post.livro.titulo }}</a></h3>
+      <p>{{ post.texto }}</p>
+    </div>
+  </article>
+  {% empty %}
+  <p class="post vazio">Nenhuma indicação ainda. Seja o primeiro a indicar um livro.</p>
+  {% endfor %}
+</section>
+{% if user.is_authenticated %}
+<form class="formulario novo-post" method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button class="botao">Publicar indicação</button>
+</form>
+{% else %}
+<p><a href="{% url 'login' %}">Entre</a> para indicar um livro.</p>
+{% endif %}
+{% endblock %}

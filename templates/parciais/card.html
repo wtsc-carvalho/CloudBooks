@@ -1,0 +1,17 @@
+<article class="card">
+  <a href="{% url 'livro' livro.pk %}">
+    <div class="capa {{ livro.classe_capa }}"><span>{{ livro.titulo }}</span></div>
+    <h3>{{ livro.titulo }}</h3>
+  </a>
+  <p class="autor">{{ livro.autor }}</p>
+  <p class="preco">R$ {{ livro.preco_final }}</p>
+  {% if user.is_authenticated %}
+  <form method="post" action="{% url 'adicionar_carrinho' livro.pk %}">
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ request.get_full_path }}">
+    <button class="botao pequeno">Adicionar ao carrinho</button>
+  </form>
+  {% else %}
+  <a class="botao pequeno secundario" href="{% url 'login' %}">Entrar para comprar</a>
+  {% endif %}
+</article>

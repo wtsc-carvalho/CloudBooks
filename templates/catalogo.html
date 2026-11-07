@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block titulo %}{{ secao }}{% endblock %}
+{% block conteudo %}
+
+<!-- Seção Destaques: Fixada com os 6 livros solicitados -->
+<section class="vitrine" aria-label="Livros em Destaque">
+  <a class="slide" href="#">
+    <div class="capa capa-4"><span>A Ilha do Tesouro</span></div>
+    <div>
+      <h2>A Ilha do Tesouro</h2>
+      <p class="autor">Robert Louis Stevenson</p>
+      <p class="preco">R$ 23,72</p>
+    </div>
+  </a>
+
+  <a class="slide" href="#">
+    <div class="capa capa-3"><span>Os Miseráveis</span></div>
+    <div>
+      <h2>Os Miseráveis</h2>
+      <p class="autor">Victor Hugo</p>
+      <p class="preco">R$ 89,90</p>
+    </div>
+  </a>
+
+  <!-- Preencha com os dados reais dos outros 4 favoritos -->
+  <a class="slide" href="#">
+    <div class="capa capa-1"><span>Nome do Livro 3</span></div>
+    <div><h2>Nome do Livro 3</h2><p class="autor">Autor 3</p><p class="preco">R$ 00,00</p></div>
+  </a>
+  <a class="slide" href="#">
+    <div class="capa capa-0"><span>Nome do Livro 4</span></div>
+    <div><h2>Nome do Livro 4</h2><p class="autor">Autor 4</p><p class="preco">R$ 00,00</p></div>
+  </a>
+  <a class="slide" href="#">
+    <div class="capa capa-2"><span>Nome do Livro 5</span></div>
+    <div><h2>Nome do Livro 5</h2><p class="autor">Autor 5</p><p class="preco">R$ 00,00</p></div>
+  </a>
+  <a class="slide" href="#">
+    <div class="capa capa-4"><span>Nome do Livro 6</span></div>
+    <div><h2>Nome do Livro 6</h2><p class="autor">Autor 6</p><p class="preco">R$ 00,00</p></div>
+  </a>
+</section>
+
+<!-- Navegação por Filtros -->
+<nav class="chips" aria-label="Filtrar por categorias">
+  <a class="chip{% if not categoria_ativa %} ativo{% endif %}" href="{% url 'categorias' %}">Todas</a>
+  {% for c in categorias %}
+  <a class="chip{% if categoria_ativa == c %} ativo{% endif %}" href="{% url 'categoria' c.pk %}">{{ c.nome }}</a>
+  {% endfor %}
+</nav>
+
+{% if mais_vendidos %}
+<section aria-labelledby="titulo-vendidos">
+  <h2 id="titulo-vendidos" class="secao">Mais vendidos</h2>
+  <div class="grade">
+    {% for livro in mais_vendidos %}{% include "parciais/card.html" %}{% endfor %}
+  </div>
+</section>
+{% endif %}
+
+{% if promocoes %}
+<section aria-labelledby="titulo-promocoes">
+  <h2 id="titulo-promocoes" class="secao">Promoções</h2>
+  <div class="grade">
+    {% for livro in promocoes %}{% include "parciais/card.html" %}{% endfor %}
+  </div>
+</section>
+{% endif %}
+
+<section aria-labelledby="titulo-catalogo">
+  <h2 id="titulo-catalogo" class="secao">{{ secao }}</h2>
+  <div class="grade">
+    {% for livro in livros %}
+      {% include "parciais/card.html" %}
+    {% empty %}
+      <p class="vazio" role="alert">Nenhum livro encontrado. Tente ajustar os filtros ou pesquisar por outro termo.</p>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

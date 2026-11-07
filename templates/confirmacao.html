@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block titulo %}Pedido #{{ pedido.pk }}{% endblock %}
+{% block conteudo %}
+<section class="confirmacao">
+  <h1>Pedido #{{ pedido.pk }} confirmado</h1>
+  <p>Obrigado pela compra. Pagamento simulado via {{ pedido.pagamento }}.</p>
+  <ul>
+    {% for item in pedido.itens.all %}
+    <li>{{ item.quantidade }} × {{ item.livro.titulo }} — R$ {{ item.preco_unitario }}</li>
+    {% endfor %}
+  </ul>
+  <p>Entrega em: {{ pedido.endereco }}</p>
+  <p class="total">Total: R$ {{ pedido.total }}</p>
+  <a class="botao" href="{% url 'configuracoes' %}">Ver meus pedidos</a>
+</section>
+{% endblock %}

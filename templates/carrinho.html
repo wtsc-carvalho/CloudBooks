@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block titulo %}Carrinho{% endblock %}
+{% block conteudo %}
+<h1>Carrinho</h1>
+{% if itens %}
+<div class="carrinho">
+  {% for item in itens %}
+  <article class="linha">
+    <div class="capa mini {{ item.livro.classe_capa }}"><span>{{ item.livro.titulo }}</span></div>
+    <div>
+      <h3><a href="{% url 'livro' item.livro.pk %}">{{ item.livro.titulo }}</a></h3>
+      <p class="autor">R$ {{ item.livro.preco_final }} cada</p>
+    </div>
+    <div class="quantidade">
+      <form method="post" action="{% url 'alterar_carrinho' item.pk 'menos' %}">{% csrf_token %}<button class="botao pequeno secundario" aria-label="Diminuir quantidade">−</button></form>
+      <span>{{ item.quantidade }}</span>
+      <form method="post" action="{% url 'alterar_carrinho' item.pk 'mais' %}">{% csrf_token %}<button class="botao pequeno secundario" aria-label="Aumentar quantidade">+</button></form>
+    </div>
+    <p class="preco">R$ {{ item.subtotal }}</p>
+    <form method="post" action="{% url 'alterar_carrinho' item.pk 'remover' %}" data-confirma="Remover este livro do carrinho?">{% csrf_token %}<button class="link">Excluir</button></form>
+  </article>
+  {% endfor %}
+</div>
+<aside class="resumo">
+  <p><span>Subtotal</span><span>R$ {{ bruto }}</span></p>
+  <p><span>Descontos</span><span>− R$ {{ desconto }}</span></p>
+  <p class="total"><span>Total</span><span>R$ {{ total }}</span></p>
+  <a class="botao" href="{% url 'finalizar' %}">Finalizar compra</a>
+</aside>
+{% else %}
+<p class="vazio">Seu carrinho está vazio. <a href="{% url 'home' %}">Encontrar livros</a></p>
+{% endif %}
+{% endblock %}
