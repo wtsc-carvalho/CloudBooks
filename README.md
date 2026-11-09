@@ -1,74 +1,136 @@
-# CloudBooks — Livraria virtual
+# 📚 CloudBooks — Livraria Virtual
 
-Projeto de livraria virtual desenvolvido com **Python, Django, HTML, CSS, JavaScript e SQLite**.
+Um sistema completo de livraria virtual desenvolvido para oferecer uma excelente experiência de usuário, com recursos de e-commerce e interação social.
 
-## Requisitos
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Django](https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white)
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)
+![SQLite](https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white)
 
-- Python 3.10 ou superior
-- VS Code (recomendado)
+---
 
-## Como rodar o projeto
+## 📋 Pré-requisitos
 
-1. Extraia o arquivo `CloudBooks.zip` e abra a pasta `CloudBooks` no VS Code.
-2. Abra o terminal dentro da pasta `CloudBooks` (a pasta onde está o arquivo `manage.py`).
-3. Crie e ative o ambiente virtual:
-   - Windows: `python -m venv venv` e depois `venv\Scripts\activate`
-   - Linux/macOS: `python3 -m venv venv` && `source venv/bin/activate`
-4. Instale as dependências:
-   `pip install -r requirements.txt`
-5. Crie as tabelas do banco de dados:
-   `python manage.py makemigrations loja`
-   `python manage.py migrate`
-6. Carregue os dados de exemplo (recomendado):
-   `python manage.py popular_loja`
-7. Inicie o servidor:
-   `python manage.py runserver`
-8. Abra no navegador: http://127.0.0.1:8000/
+Antes de começar, você precisará ter instalado em sua máquina:
+- **Python 3.10** ou superior
+- Editor de código recomendado: **[VS Code](https://code.visualstudio.com/)**
 
-## Contas de teste
+---
 
-| Perfil | Usuário | Senha | Acesso |
-| --- | --- | --- | --- |
-| Painel administrativo | admin | admin123 | http://127.0.0.1:8000/admin/ |
-| Cliente | leitor | leitor123 | Login em http://127.0.0.1:8000/login/ |
+## 🚀 Como rodar o projeto localmente
 
-Também é possível criar uma conta nova pela tela de cadastro.
+Siga o passo a passo abaixo para configurar o ambiente e executar a aplicação:
 
-## Telas do projeto
+**1. Extraia e abra o projeto**
+Descompacte o arquivo `CloudBooks.zip` e abra a pasta `CloudBooks` no seu editor (VS Code).
 
-| Nº | Tela | Endereço |
-| --- | --- | --- |
+**2. Abra o terminal**
+Certifique-se de estar no diretório raiz do projeto (onde está localizado o arquivo `manage.py`).
+
+**3. Crie e ative o ambiente virtual**
+- 🪟 **Windows:**
+  ```bash
+  python -m venv venv
+  venv\Scripts\activate
+  ```
+- 🍎/🐧 **Linux ou macOS:**
+  ```bash
+  python3 -m venv venv
+  source venv/bin/activate
+  ```
+
+**4. Instale as dependências**
+```bash
+pip install -r requirements.txt
+```
+
+**5. Configure o banco de dados**
+Crie as tabelas executando as migrações:
+```bash
+python manage.py makemigrations loja
+python manage.py migrate
+```
+
+**6. Carregue os dados de exemplo (Recomendado)**
+Popule a loja com livros e categorias para testar as funcionalidades:
+```bash
+python manage.py popular_loja
+```
+
+**7. Inicie o servidor**
+```bash
+python manage.py runserver
+```
+🌐 Acesse no navegador: [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
+
+---
+
+## 🔐 Contas de Teste
+
+Utilize as credenciais abaixo para explorar os diferentes perfis da plataforma:
+
+| Perfil | Usuário | Senha | Acesso Rápido |
+| :--- | :--- | :--- | :--- |
+| 🛡️ **Administrador** | `admin` | `admin123` | [Painel Admin](http://127.0.0.1:8000/admin/) |
+| 👤 **Cliente** | `leitor` | `leitor123` | [Página de Login](http://127.0.0.1:8000/login/) |
+
+> 💡 *Dica: Você também pode criar uma nova conta testando o fluxo de cadastro na página inicial da aplicação.*
+
+---
+
+## 🗺️ Mapa de Telas
+
+Abaixo estão as principais rotas disponíveis na aplicação:
+
+| Nº | Tela | Rota |
+| :---: | :--- | :--- |
 | 1 | Entrada (Explorar, Login e Cadastro) | `/` |
-| 2 | Home (carrossel de destaques e livros gerais) | `/home/` |
-| 3 | Cadastro (10 campos) | `/cadastro/` |
-| 4 | Login (e-mail e senha) | `/login/` |
-| 5 | Carrinho (quantidades, descontos e total) | `/carrinho/` |
-| 6 | Clube de leitura (feed tipo TikTok) | `/clube/` |
-| 7 | Painel administrativo | `/admin/` |
-| 8 | Minha conta e Configurações (perfil, senha e pedidos) | `/conta/` |
-| 9 | Detalhes do livro (avaliações, favoritos e estante) | `/livro/<id>/` |
+| 2 | Home (Carrossel de destaques e livros gerais) | `/home/` |
+| 3 | Cadastro | `/cadastro/` |
+| 4 | Login | `/login/` |
+| 5 | Carrinho (Quantidades, descontos e total) | `/carrinho/` |
+| 6 | Clube de Leitura (Feed interativo tipo TikTok) | `/clube/` |
+| 7 | Painel Administrativo | `/admin/` |
+| 8 | Minha Conta (Perfil, senha, pedidos e configs) | `/conta/` |
+| 9 | Detalhes do Livro (Avaliações e favoritos) | `/livro/<id>/` |
 | 10 | Categorias | `/categorias/` |
-| 11 | Pesquisa (título, autor ou categoria) | `/pesquisa/?q=termo` |
-| 12 | Favoritos e Minha estante | `/favoritos/` |
-| 13 | Finalização da compra | `/finalizar/` |
-| 14 | Confirmação do pedido | `/pedido/<id>/` |
+| 11 | Pesquisa (Título, autor ou categoria) | `/pesquisa/?q=termo` |
+| 12 | Favoritos e Minha Estante | `/favoritos/` |
+| 13 | Finalização da Compra | `/finalizar/` |
+| 14 | Confirmação do Pedido | `/pedido/<id>/` |
 
-## Regras de funcionamento
+---
 
-- **Compra simulada:** nenhuma cobrança real é feita. O pedido é registrado, o estoque é baixado e a forma de pagamento (Pix, cartão ou boleto) é apenas informativa.
-- **Livro do mês:** é o livro com mais indicações no Clube de leitura no mês atual.
-- **Mais lidos:** são os livros marcados como "Já lidos" nas estantes dos usuários.
-- **Promoções:** cadastradas no painel administrativo, dentro de cada livro.
-- **Capas:** quando nenhuma imagem é enviada, o livro aparece com uma capa colorida e o título.
-- **Upload de capa:** exige a biblioteca Pillow, que já está em `requirements.txt`.
+## ⚙️ Regras de Negócio e Funcionamento
 
-## Como zerar o banco de dados
+- 🛒 **Compra Simulada:** O sistema não realiza cobranças reais. O fluxo apenas registra o pedido, deduz o estoque e exibe a forma de pagamento (Pix, Cartão ou Boleto) em caráter informativo.
+- 🏆 **Livro do Mês:** O título com maior número de indicações no "Clube de Leitura" durante o mês atual ganha este destaque.
+- 📈 **Mais Lidos:** Lista gerada dinamicamente com base nos livros marcados como "Já lidos" nas estantes dos clientes.
+- 🏷️ **Promoções:** Gerenciadas de forma individual diretamente pelo Painel Administrativo, dentro do cadastro de cada livro.
+- 🖼️ **Gerenciamento de Capas:** 
+  - Se nenhuma imagem for enviada, o sistema gera automaticamente uma capa colorida com o título do livro.
+  - O upload de imagens customizadas utiliza a biblioteca `Pillow` (já exigida no `requirements.txt`).
 
-Apague o arquivo `db.sqlite3`, apague os arquivos da pasta `loja/migrations/` exceto `__init__.py`, e refaça os passos 5 e 6.
+---
 
-## Estrutura principal
+## 🧹 Como zerar o banco de dados
 
-- `cloudbooks/`: configurações do projeto (settings, urls).
-- `loja/`: modelos, formulários, views, rotas, painel administrativo e comando de dados de exemplo.
-- `templates/`: páginas HTML.
-- `static/`: CSS e JavaScript.
+Caso precise limpar todas as informações e recomeçar do zero:
+1. Apague o arquivo `db.sqlite3` na raiz do projeto.
+2. Apague todos os arquivos dentro da pasta `loja/migrations/`, **EXCETO** o arquivo `__init__.py`.
+3. Repita os **passos 5 e 6** do guia de instalação acima.
+
+---
+
+## 📁 Estrutura Principal de Diretórios
+
+```text
+📦 CloudBooks
+ ┣ 📂 cloudbooks/     # Configurações globais do projeto (settings, urls)
+ ┣ 📂 loja/           # App principal: models, forms, views, rotas e admin
+ ┣ 📂 templates/      # Arquivos HTML da interface
+ ┣ 📂 static/         # Arquivos estáticos (CSS, JavaScript, Imagens)
+ ┗ 📜 manage.py       # Gerenciador de execução do Django
+```
