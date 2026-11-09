@@ -1,6 +1,30 @@
 <article class="card">
   <a href="{% url 'livro' livro.pk %}">
+    {% if livro.titulo == "Coraline" %}
+    <img class="capa" src="https://m.media-amazon.com/images/I/91DZobBc1BL._SL1500_.jpg" alt="Coraline" style="padding:0; object-fit:cover;">
+    {% elif livro.titulo == "A Ilha do Tesouro" %}
+    <img class="capa" src="https://m.media-amazon.com/images/I/91n-D9eAH0L._SL1500_.jpg" alt="A Ilha do Tesouro" style="padding:0; object-fit:cover;">
+    {% elif livro.titulo == "Os Miseráveis" %}
+    <img class="capa" src="https://m.media-amazon.com/images/I/71L28YvPobL._SL1026_.jpg" alt="Os Miseráveis" style="padding:0; object-fit:cover;">
+    {% elif livro.titulo == "Fahrenheit 451" %}
+    <img class="capa" src="https://m.media-amazon.com/images/I/51tAD6LyZ-L._SL1360_.jpg" alt="Fahrenheit 451" style="padding:0; object-fit:cover;">
+    {% elif livro.titulo == "Drácula" %}
+    <img class="capa" src="https://m.media-amazon.com/images/I/61gfnGu9cTL._SL1200_.jpg" alt="Drácula" style="padding:0; object-fit:cover;">
+    {% elif livro.titulo == "Neuromancer" %}
+    <img class="capa" src="https://m.media-amazon.com/images/I/51TMmMNtZiL._SY445_SX342_ML2_.jpg" alt="Neuromancer" style="padding:0; object-fit:cover;">
+    {% elif livro.titulo == "O Silêncio dos Inocentes" %}
+    <img class="capa" src="https://m.media-amazon.com/images/I/81WFnxxa7kL._SL1500_.jpg" alt="O Silêncio dos Inocentes" style="padding:0; object-fit:cover;">
+    {% elif livro.titulo == "Hábitos Atômicos" %}
+    <img class="capa" src="https://m.media-amazon.com/images/I/81eT2pjx4jL._SL1500_.jpg" alt="Hábitos Atômicos" style="padding:0; object-fit:cover;">
+    {% elif livro.titulo == "Dom Casmurro" %}
+    <img class="capa" src="https://m.media-amazon.com/images/I/61x1ZHomWUL._SL1200_.jpg" alt="Dom Casmurro" style="padding:0; object-fit:cover;">
+    {% elif livro.titulo == "O Hobbit" %}
+    <img class="capa" src="https://m.media-amazon.com/images/I/91M9xPIf10L._SL1500_.jpg" alt="O Hobbit" style="padding:0; object-fit:cover;">
+    {% elif livro.capa %}
+    <img class="capa" src="{{ livro.capa.url }}" alt="{{ livro.titulo }}" style="padding:0; object-fit:cover;">
+    {% else %}
     <div class="capa {{ livro.classe_capa }}"><span>{{ livro.titulo }}</span></div>
+    {% endif %}
     <h3>{{ livro.titulo }}</h3>
   </a>
   <p class="autor">{{ livro.autor }}</p>
