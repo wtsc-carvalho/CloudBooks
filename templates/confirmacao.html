@@ -1,16 +1,27 @@
-{% extends "base.html" %}
+{% extends "home.html" %}
 {% block titulo %}Pedido #{{ pedido.pk }}{% endblock %}
 {% block conteudo %}
-<section class="confirmacao">
-  <h1>Pedido #{{ pedido.pk }} confirmado</h1>
-  <p>Obrigado pela compra. Pagamento simulado via {{ pedido.pagamento }}.</p>
-  <ul>
+<section class="confirmacao" style="text-align: center; max-width: 600px; margin: 4rem auto; background: var(--cor-paineis); padding: 3rem; border-radius: 12px; border: 1px solid var(--cor-roxo-principal);">
+  <div style="font-size: 4rem; color: var(--cor-dourado-principal); margin-bottom: 1rem;">✓</div>
+  <h1 style="color: var(--cor-texto-principal); margin-bottom: 0.5rem;">Pedido #{{ pedido.pk }} Confirmado!</h1>
+  <p style="color: var(--cor-texto-suave); margin-bottom: 2rem;">Obrigado pela compra. O pagamento simulado via <strong>{{ pedido.pagamento }}</strong> foi processado.</p>
+  
+  <ul style="list-style: none; padding: 0; text-align: left; margin-bottom: 2rem; border-top: 1px solid var(--cor-azul-roxo); border-bottom: 1px solid var(--cor-azul-roxo); padding: 1rem 0;">
     {% for item in pedido.itens.all %}
-    <li>{{ item.quantidade }} × {{ item.livro.titulo }} — R$ {{ item.preco_unitario }}</li>
+    <li style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+      <span>{{ item.quantidade }}x {{ item.livro.titulo }}</span>
+      <span style="color: var(--cor-dourado-claro);">R$ {{ item.preco_unitario }}</span>
+    </li>
     {% endfor %}
   </ul>
-  <p>Entrega em: {{ pedido.endereco }}</p>
-  <p class="total">Total: R$ {{ pedido.total }}</p>
-  <a class="botao" href="{% url 'configuracoes' %}">Ver meus pedidos</a>
+  
+  <div style="text-align: left; background: var(--cor-fundo-secundario); padding: 1rem; border-radius: 8px; margin-bottom: 2rem;">
+    <p style="margin: 0; color: var(--cor-texto-suave); font-size: 0.9rem;">Endereço de entrega:</p>
+    <p style="margin: 0.5rem 0 0 0; font-weight: bold;">{{ pedido.endereco }}</p>
+  </div>
+  
+  <p class="total" style="font-size: 1.5rem; font-weight: bold; margin-bottom: 2rem;">Total pago: <span style="color: var(--cor-dourado-principal);">R$ {{ pedido.total }}</span></p>
+  
+  <a class="botao" href="{% url 'configuracoes' %}">Acompanhar Meus Pedidos</a>
 </section>
 {% endblock %}

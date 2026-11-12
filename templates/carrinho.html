@@ -1,57 +1,126 @@
-{% extends "base.html" %}
+{% extends "home.html" %}
 {% block titulo %}Carrinho{% endblock %}
 {% block conteudo %}
-<h1>Carrinho</h1>
+<h1 class="titulo-glow">
+  <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+  Carrinho
+</h1>
+<p style="color: var(--cor-texto-suave); margin-bottom: 2rem; font-size: 1.1rem;">Seus livros te esperam! ✨</p>
+
 {% if itens %}
-<div class="carrinho">
-  {% for item in itens %}
-  <article class="linha">
-    {% if item.livro.titulo == "Coraline" %}
-    <img class="capa mini" src="https://m.media-amazon.com/images/I/91DZobBc1BL._SL1500_.jpg" alt="Coraline" style="padding:0; object-fit:cover;">
-    {% elif item.livro.titulo == "A Ilha do Tesouro" %}
-    <img class="capa mini" src="https://m.media-amazon.com/images/I/91n-D9eAH0L._SL1500_.jpg" alt="A Ilha do Tesouro" style="padding:0; object-fit:cover;">
-    {% elif item.livro.titulo == "Os Miseráveis" %}
-    <img class="capa mini" src="https://m.media-amazon.com/images/I/71L28YvPobL._SL1026_.jpg" alt="Os Miseráveis" style="padding:0; object-fit:cover;">
-    {% elif item.livro.titulo == "Fahrenheit 451" %}
-    <img class="capa mini" src="https://m.media-amazon.com/images/I/51tAD6LyZ-L._SL1360_.jpg" alt="Fahrenheit 451" style="padding:0; object-fit:cover;">
-    {% elif item.livro.titulo == "Drácula" %}
-    <img class="capa mini" src="https://m.media-amazon.com/images/I/61gfnGu9cTL._SL1200_.jpg" alt="Drácula" style="padding:0; object-fit:cover;">
-    {% elif item.livro.titulo == "Neuromancer" %}
-    <img class="capa mini" src="https://m.media-amazon.com/images/I/51TMmMNtZiL._SY445_SX342_ML2_.jpg" alt="Neuromancer" style="padding:0; object-fit:cover;">
-    {% elif item.livro.titulo == "O Silêncio dos Inocentes" %}
-    <img class="capa mini" src="https://m.media-amazon.com/images/I/81WFnxxa7kL._SL1500_.jpg" alt="O Silêncio dos Inocentes" style="padding:0; object-fit:cover;">
-    {% elif item.livro.titulo == "Hábitos Atômicos" %}
-    <img class="capa mini" src="https://m.media-amazon.com/images/I/81eT2pjx4jL._SL1500_.jpg" alt="Hábitos Atômicos" style="padding:0; object-fit:cover;">
-    {% elif item.livro.titulo == "Dom Casmurro" %}
-    <img class="capa mini" src="https://m.media-amazon.com/images/I/61x1ZHomWUL._SL1200_.jpg" alt="Dom Casmurro" style="padding:0; object-fit:cover;">
-    {% elif item.livro.titulo == "O Hobbit" %}
-    <img class="capa mini" src="https://m.media-amazon.com/images/I/91M9xPIf10L._SL1500_.jpg" alt="O Hobbit" style="padding:0; object-fit:cover;">
-    {% elif item.livro.capa %}
-    <img class="capa mini" src="{{ item.livro.capa.url }}" alt="{{ item.livro.titulo }}" style="padding:0; object-fit:cover;">
-    {% else %}
-    <div class="capa mini {{ item.livro.classe_capa }}"><span>{{ item.livro.titulo }}</span></div>
-    {% endif %}
-    <div>
-      <h3><a href="{% url 'livro' item.livro.pk %}">{{ item.livro.titulo }}</a></h3>
-      <p class="autor">R$ {{ item.livro.preco_final }} cada</p>
+<div class="carrinho-layout">
+  
+  <!-- Lado Esquerdo: Lista de Itens -->
+  <div class="glass-panel" style="padding: 1rem;">
+    {% for item in itens %}
+    <article class="linha-carrinho">
+      
+      <!-- CORREÇÃO: Bloco completo com todas as capas hardcoded -->
+      {% if item.livro.titulo == "Coraline" %}
+      <img class="capa mini" src="https://m.media-amazon.com/images/I/91DZobBc1BL._SL1500_.jpg" alt="Capa Coraline" style="border-radius: 8px;">
+      {% elif item.livro.titulo == "A Ilha do Tesouro" %}
+      <img class="capa mini" src="https://m.media-amazon.com/images/I/91n-D9eAH0L._SL1500_.jpg" alt="Capa A Ilha do Tesouro" style="border-radius: 8px;">
+      {% elif item.livro.titulo == "Os Miseráveis" %}
+      <img class="capa mini" src="https://m.media-amazon.com/images/I/71L28YvPobL._SL1026_.jpg" alt="Capa Os Miseráveis" style="border-radius: 8px;">
+      {% elif item.livro.titulo == "Fahrenheit 451" %}
+      <img class="capa mini" src="https://m.media-amazon.com/images/I/51tAD6LyZ-L._SL1360_.jpg" alt="Capa Fahrenheit 451" style="border-radius: 8px;">
+      {% elif item.livro.titulo == "Drácula" %}
+      <img class="capa mini" src="https://m.media-amazon.com/images/I/61gfnGu9cTL._SL1200_.jpg" alt="Capa Drácula" style="border-radius: 8px;">
+      {% elif item.livro.titulo == "Neuromancer" %}
+      <img class="capa mini" src="https://m.media-amazon.com/images/I/51TMmMNtZiL._SY445_SX342_ML2_.jpg" alt="Capa Neuromancer" style="border-radius: 8px;">
+      {% elif item.livro.titulo == "O Silêncio dos Inocentes" %}
+      <img class="capa mini" src="https://m.media-amazon.com/images/I/81WFnxxa7kL._SL1500_.jpg" alt="Capa O Silêncio dos Inocentes" style="border-radius: 8px;">
+      {% elif item.livro.titulo == "Hábitos Atômicos" %}
+      <img class="capa mini" src="https://m.media-amazon.com/images/I/81eT2pjx4jL._SL1500_.jpg" alt="Capa Hábitos Atômicos" style="border-radius: 8px;">
+      {% elif item.livro.titulo == "Dom Casmurro" %}
+      <img class="capa mini" src="https://m.media-amazon.com/images/I/61x1ZHomWUL._SL1200_.jpg" alt="Capa Dom Casmurro" style="border-radius: 8px;">
+      {% elif item.livro.titulo == "O Hobbit" %}
+      <img class="capa mini" src="https://m.media-amazon.com/images/I/91M9xPIf10L._SL1500_.jpg" alt="Capa O Hobbit" style="border-radius: 8px;">
+      {% elif item.livro.capa %}
+      <img class="capa mini" src="{{ item.livro.capa.url }}" alt="Capa {{ item.livro.titulo }}" style="border-radius: 8px;">
+      {% else %}
+      <div class="capa mini {{ item.livro.classe_capa }}" style="border-radius: 8px;"><span>{{ item.livro.titulo }}</span></div>
+      {% endif %}
+      
+      <div style="flex: 1;">
+        <h3 style="margin: 0; font-size: 1.1rem;"><a href="{% url 'livro' item.livro.pk %}" style="color: #fff;">{{ item.livro.titulo }}</a></h3>
+        <p class="autor" style="margin: 0.2rem 0; font-size: 0.9rem;">{{ item.livro.autor }}</p>
+        <p style="margin: 0.2rem 0; font-size: 0.8rem; color: var(--cor-texto-suave); display: flex; align-items: center; gap: 4px;">
+          <span style="color: var(--cor-dourado-principal);">★★★★☆</span> 4.8 | 📖 Livro físico
+        </p>
+      </div>
+      
+      <div class="controle-qtd">
+        <form method="post" action="{% url 'alterar_carrinho' item.pk 'menos' %}">
+          {% csrf_token %}<button type="submit">−</button>
+        </form>
+        <span style="font-weight: bold; width: 20px; text-align: center;">{{ item.quantidade }}</span>
+        <form method="post" action="{% url 'alterar_carrinho' item.pk 'mais' %}">
+          {% csrf_token %}<button type="submit">+</button>
+        </form>
+      </div>
+      
+      <p style="font-weight: bold; font-size: 1.2rem; width: 100px; text-align: right;">R$ {{ item.subtotal }}</p>
+      
+      <form method="post" action="{% url 'alterar_carrinho' item.pk 'remover' %}" style="margin: 0;">
+        {% csrf_token %}
+        <button type="submit" style="background: none; border: none; color: var(--cor-texto-suave); cursor: pointer;" title="Remover">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+        </button>
+      </form>
+    </article>
+    {% endfor %}
+    
+    <div style="margin-top: 2rem; padding-left: 1rem;">
+      <a href="{% url 'home' %}" style="color: var(--cor-texto-suave); display: flex; align-items: center; gap: 8px;">
+        ← Continuar comprando
+      </a>
     </div>
-    <div class="quantidade">
-      <form method="post" action="{% url 'alterar_carrinho' item.pk 'menos' %}">{% csrf_token %}<button class="botao pequeno secundario" aria-label="Diminuir quantidade">−</button></form>
-      <span>{{ item.quantidade }}</span>
-      <form method="post" action="{% url 'alterar_carrinho' item.pk 'mais' %}">{% csrf_token %}<button class="botao pequeno secundario" aria-label="Aumentar quantidade">+</button></form>
+  </div>
+
+  <!-- Lado Direito: Resumo -->
+  <aside class="glass-panel" style="height: fit-content;">
+    <h2 style="margin-top: 0; font-size: 1.4rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem;">Resumo do pedido</h2>
+    
+    <div style="display: flex; justify-content: space-between; margin: 1.5rem 0 0.5rem 0; color: var(--cor-texto-suave);">
+      <span>Subtotal</span>
+      <span>R$ {{ bruto }}</span>
     </div>
-    <p class="preco">R$ {{ item.subtotal }}</p>
-    <form method="post" action="{% url 'alterar_carrinho' item.pk 'remover' %}" data-confirma="Remover este livro do carrinho?">{% csrf_token %}<button class="link">Excluir</button></form>
-  </article>
-  {% endfor %}
+    <div style="display: flex; justify-content: space-between; margin-bottom: 1.5rem; color: var(--cor-texto-suave);">
+      <span>Frete <br><small>(Grátis para todo o Brasil)</small></span>
+      <span>R$ 0,00</span>
+    </div>
+    
+    <div style="display: flex; justify-content: space-between; align-items: center; font-size: 1.5rem; font-weight: bold; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1.5rem; margin-bottom: 2rem;">
+      <span>Total</span>
+      <span>R$ {{ total }}</span>
+    </div>
+    
+    <div style="display: flex; flex-direction: column; gap: 1rem;">
+      <a class="btn-gold" href="{% url 'finalizar' %}" style="width: 100%; text-decoration: none;">
+        🔒 Finalizar compra →
+      </a>
+      <p style="text-align: center; color: var(--cor-texto-suave); font-size: 0.9rem; margin: 0;">ou</p>
+      <button class="btn-dark-outline" style="width: 100%;">
+        <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+        Pagar com Google
+      </button>
+    </div>
+  </aside>
 </div>
-<aside class="resumo">
-  <p><span>Subtotal</span><span>R$ {{ bruto }}</span></p>
-  <p><span>Descontos</span><span>− R$ {{ desconto }}</span></p>
-  <p class="total"><span>Total</span><span>R$ {{ total }}</span></p>
-  <a class="botao" href="{% url 'finalizar' %}">Finalizar compra</a>
-</aside>
+
+<!-- Rodapé de segurança da foto -->
+<div style="display: flex; justify-content: center; gap: 3rem; margin-top: 4rem; flex-wrap: wrap; color: var(--cor-texto-suave); font-size: 0.9rem;">
+  <div style="display: flex; align-items: center; gap: 8px;"><svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> Compra segura</div>
+  <div style="display: flex; align-items: center; gap: 8px;"><svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg> Entrega rápida</div>
+  <div style="display: flex; align-items: center; gap: 8px;"><svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.36 6.64a9 9 0 11-12.73 0 M12 2v4"></path></svg> Suporte 24h</div>
+  <div style="display: flex; align-items: center; gap: 8px;"><svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg> Amor pelos livros</div>
+</div>
+
 {% else %}
-<p class="vazio">Seu carrinho está vazio. <a href="{% url 'home' %}">Encontrar livros</a></p>
+<div class="glass-panel" style="text-align: center; padding: 4rem;">
+  <p style="font-size: 1.2rem; color: var(--cor-texto-suave);">O seu carrinho está vazio.</p>
+  <a class="btn-gold" href="{% url 'home' %}" style="margin-top: 1rem; text-decoration: none;">Explorar Livros</a>
+</div>
 {% endif %}
 {% endblock %}

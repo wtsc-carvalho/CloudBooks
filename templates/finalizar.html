@@ -1,11 +1,19 @@
-{% extends "base.html" %}
+{% extends "home.html" %}
 {% block titulo %}Finalizar compra{% endblock %}
 {% block conteudo %}
-<h1>Finalizar compra</h1>
-<form method="post" class="formulario">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <p class="resumo-linha"><span>Total a pagar</span><strong>R$ {{ total }}</strong></p>
-  <button class="botao">Confirmar pedido</button>
-</form>
+<section class="auth-section" style="max-width: 600px; margin: 2rem auto; background: var(--cor-paineis); padding: 3rem 2rem; border-radius: 12px; border: 1px solid var(--cor-roxo-principal);">
+  <h1 class="secao" style="margin-top: 0; border-bottom: 1px solid var(--cor-azul-roxo); padding-bottom: 1rem;">Finalizar Compra</h1>
+  
+  <form method="post" class="formulario" style="margin-top: 2rem;">
+    {% csrf_token %}
+    {{ form.as_p }}
+    
+    <div class="resumo-linha" style="display: flex; justify-content: space-between; align-items: center; background: var(--cor-fundo-secundario); padding: 1.5rem; border-radius: 8px; margin: 2rem 0; border-left: 4px solid var(--cor-dourado-principal);">
+      <span style="font-size: 1.2rem; color: var(--cor-texto-suave);">Total a pagar:</span>
+      <strong style="font-size: 2rem; color: var(--cor-dourado-claro);">R$ {{ total }}</strong>
+    </div>
+    
+    <button type="submit" class="botao" style="width: 100%; font-size: 1.2rem; padding: 1rem;">Confirmar Pedido Seguro</button>
+  </form>
+</section>
 {% endblock %}

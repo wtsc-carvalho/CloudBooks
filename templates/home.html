@@ -1,0 +1,110 @@
+{% load static %}
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block titulo %}CloudBooks{% endblock %} · CloudBooks</title>
+  <meta name="description" content="A sua loja e clube de leitura online.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
+</head>
+<body class="{% block classe_corpo %}{% endblock %}">
+
+<a href="#conteudo-principal" class="pular-navegacao">Saltar para o conteúdo principal</a>
+
+{% block cabecalho %}
+<header class="topo">
+  <a class="marca" href="{% url 'home' %}" aria-label="CloudBooks - Página Inicial">CloudBooks</a>
+  
+  <nav aria-label="Navegação principal" class="nav-explorar">
+    <a href="{% url 'categorias' %}">Categorias</a>
+    <a href="{% url 'clube' %}">Clube</a>
+  </nav>
+
+  <form class="busca" action="{% url 'pesquisa' %}" method="get" role="search">
+    <label for="campo-busca" class="sr-only">Pesquisar livros</label>
+    <input id="campo-busca" type="search" name="q" placeholder="Buscar por título ou autor..." value="{{ request.GET.q }}">
+  </form>
+  
+  <nav aria-label="Conta e Carrinho" class="nav-usuario">
+    {% if user.is_authenticated %}
+      <span style="color: var(--cor-dourado-claro); font-weight: 600; margin-right: 1rem;">Olá, {{ user.first_name|default:user.username }}</span>
+      <a href="{% url 'favoritos' %}">Favoritos</a>
+      <a href="{% url 'configuracoes' %}">Minha conta</a>
+      {% if user.is_staff %}<a href="{% url 'admin:index' %}">Painel</a>{% endif %}
+      
+      <form method="post" action="{% url 'sair' %}" style="display: inline-block; margin: 0;">
+        {% csrf_token %}
+        <button type="submit" style="background: none; border: none; color: var(--cor-lilas); cursor: pointer; font-family: inherit; font-size: 1rem; padding: 0;">Sair</button>
+      </form>
+      
+      <a href="{% url 'carrinho' %}" class="link-carrinho" aria-label="Carrinho com {{ qtd_carrinho }} itens">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+        Carrinho {% if qtd_carrinho > 0 %}<span class="badge-carrinho">{{ qtd_carrinho }}</span>{% endif %}
+      </a>
+      
+    {% else %}
+      <div class="auth-buttons">
+        <a href="{% url 'login' %}" class="btn-login">Login</a>
+        <a href="{% url 'cadastro' %}" class="btn-criar-conta">Criar conta</a>
+      </div>
+      
+      <a href="{% url 'carrinho' %}" class="link-carrinho" style="margin-left: 1rem;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+        Carrinho {% if qtd_carrinho > 0 %}<span class="badge-carrinho">{{ qtd_carrinho }}</span>{% endif %}
+      </a>
+    {% endif %}
+  </nav>
+</header>
+{% endblock %}
+
+<main id="conteudo-principal">
+  {% if messages %}
+  <ul class="avisos" aria-live="polite" style="list-style: none; padding: 0; margin-bottom: 2rem;">
+    {% for m in messages %}
+    <li class="{{ m.tags }}" style="background: var(--cor-azul-roxo); color: var(--cor-texto-principal); padding: 1rem; border-radius: 8px; margin-bottom: 0.5rem; border-left: 4px solid var(--cor-dourado-principal);">{{ m }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  
+  {% block conteudo %}{% endblock %}
+</main>
+
+<footer class="rodape" aria-labelledby="rodape-titulo">
+  <h2 id="rodape-titulo" class="sr-only">Rodapé do site</h2>
+  <div class="rodape-conteudo">
+    <div class="rodape-marca-info">
+      <a class="marca" href="{% url 'home' %}" aria-hidden="true">CloudBooks</a>
+      <p style="color: var(--cor-texto-suave); margin-top: 1rem;">Um universo de histórias à sua espera. A sua loja e clube de leitura online.</p>
+    </div>
+    
+    <div class="rodape-links">
+      <h3>Explorar</h3>
+      <nav aria-label="Navegação do rodapé">
+        <a href="{% url 'home' %}">Início</a>
+        <a href="{% url 'categorias' %}">Categorias de Livros</a>
+        <a href="{% url 'clube' %}">Clube de Leitura</a>
+      </nav>
+    </div>
+    
+    <div class="rodape-links">
+      <h3>Apoio ao Cliente</h3>
+      <nav aria-label="Links de apoio">
+        <a href="{% url 'configuracoes' %}">A Minha Conta</a>
+        <a href="#">Termos e Condições</a>
+        <a href="#">Política de Privacidade</a>
+      </nav>
+    </div>
+  </div>
+  
+  <div class="rodape-direitos">
+    <p>&copy; 2026 CloudBooks. Todos os direitos reservados.</p>
+  </div>
+</footer>
+
+<script src="{% static 'js/app.js' %}"></script>
+</body>
+</html>

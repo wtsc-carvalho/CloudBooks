@@ -1,11 +1,11 @@
-{% extends "base.html" %}
+{% extends "home.html" %}
 {% block classe_corpo %}entrada-pagina{% endblock %}
 
 {% block cabecalho %}
 <header class="topo-entrada">
-  <nav aria-label="Acesso à conta">
-    <a class="botao secundario pequeno" href="{% url 'login' %}">Login</a>
-    <a class="botao secundario pequeno" href="{% url 'cadastro' %}">Cadastro</a>
+  <nav aria-label="Acesso à conta" class="auth-buttons">
+    <a class="btn-login" href="{% url 'login' %}">Login</a>
+    <a class="btn-criar-conta" href="{% url 'cadastro' %}">Criar conta</a>
   </nav>
 </header>
 {% endblock %}
@@ -15,8 +15,8 @@
   <h1>CloudBooks</h1>
   <p>Um universo de histórias esperando por você.</p>
   
-  <div class="acoes">
-    <a class="botao" href="{% url 'home' %}" aria-label="Explorar o catálogo de livros">
+  <div class="acoes" style="margin-top: 2rem;">
+    <a class="botao" href="{% url 'home' %}" aria-label="Explorar o catálogo de livros" style="padding: 1rem 2rem; font-size: 1.2rem;">
       Explorar o Catálogo <span aria-hidden="true" style="margin-left: 8px;">&rarr;</span>
     </a>
   </div>

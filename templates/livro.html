@@ -1,74 +1,99 @@
-{% extends "base.html" %}
+{% extends "home.html" %}
 {% block titulo %}{{ livro.titulo }}{% endblock %}
 {% block conteudo %}
-<article class="detalhe">
-  <div>
+<article class="detalhe" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 3rem; background: var(--cor-paineis); padding: 2rem; border-radius: 12px; border: 1px solid var(--cor-azul-roxo);">
+  
+  <div class="detalhe-imagem" style="text-align: center;">
     {% if livro.titulo == "Coraline" %}
-    <img class="capa-img" src="https://m.media-amazon.com/images/I/91DZobBc1BL._SL1500_.jpg" alt="Coraline" style="padding:0; object-fit:cover;">
+    <img class="capa" src="https://m.media-amazon.com/images/I/91DZobBc1BL._SL1500_.jpg" alt="Capa Coraline" style="max-height: 500px; width: auto; max-width: 100%;">
     {% elif livro.titulo == "A Ilha do Tesouro" %}
-    <img class="capa-img" src="https://m.media-amazon.com/images/I/91n-D9eAH0L._SL1500_.jpg" alt="A Ilha do Tesouro" style="padding:0; object-fit:cover;">
+    <img class="capa" src="https://m.media-amazon.com/images/I/91n-D9eAH0L._SL1500_.jpg" alt="Capa A Ilha do Tesouro" style="max-height: 500px; width: auto; max-width: 100%;">
     {% elif livro.titulo == "Os Miseráveis" %}
-    <img class="capa-img" src="https://m.media-amazon.com/images/I/71L28YvPobL._SL1026_.jpg" alt="Os Miseráveis" style="padding:0; object-fit:cover;">
+    <img class="capa" src="https://m.media-amazon.com/images/I/71L28YvPobL._SL1026_.jpg" alt="Capa Os Miseráveis" style="max-height: 500px; width: auto; max-width: 100%;">
     {% elif livro.titulo == "Fahrenheit 451" %}
-    <img class="capa-img" src="https://m.media-amazon.com/images/I/51tAD6LyZ-L._SL1360_.jpg" alt="Fahrenheit 451" style="padding:0; object-fit:cover;">
+    <img class="capa" src="https://m.media-amazon.com/images/I/51tAD6LyZ-L._SL1360_.jpg" alt="Capa Fahrenheit 451" style="max-height: 500px; width: auto; max-width: 100%;">
     {% elif livro.titulo == "Drácula" %}
-    <img class="capa-img" src="https://m.media-amazon.com/images/I/61gfnGu9cTL._SL1200_.jpg" alt="Drácula" style="padding:0; object-fit:cover;">
+    <img class="capa" src="https://m.media-amazon.com/images/I/61gfnGu9cTL._SL1200_.jpg" alt="Capa Drácula" style="max-height: 500px; width: auto; max-width: 100%;">
     {% elif livro.titulo == "Neuromancer" %}
-    <img class="capa-img" src="https://m.media-amazon.com/images/I/51TMmMNtZiL._SY445_SX342_ML2_.jpg" alt="Neuromancer" style="padding:0; object-fit:cover;">
+    <img class="capa" src="https://m.media-amazon.com/images/I/51TMmMNtZiL._SY445_SX342_ML2_.jpg" alt="Capa Neuromancer" style="max-height: 500px; width: auto; max-width: 100%;">
     {% elif livro.titulo == "O Silêncio dos Inocentes" %}
-    <img class="capa-img" src="https://m.media-amazon.com/images/I/81WFnxxa7kL._SL1500_.jpg" alt="O Silêncio dos Inocentes" style="padding:0; object-fit:cover;">
+    <img class="capa" src="https://m.media-amazon.com/images/I/81WFnxxa7kL._SL1500_.jpg" alt="Capa O Silêncio dos Inocentes" style="max-height: 500px; width: auto; max-width: 100%;">
     {% elif livro.titulo == "Hábitos Atômicos" %}
-    <img class="capa-img" src="https://m.media-amazon.com/images/I/81eT2pjx4jL._SL1500_.jpg" alt="Hábitos Atômicos" style="padding:0; object-fit:cover;">
+    <img class="capa" src="https://m.media-amazon.com/images/I/81eT2pjx4jL._SL1500_.jpg" alt="Capa Hábitos Atômicos" style="max-height: 500px; width: auto; max-width: 100%;">
     {% elif livro.titulo == "Dom Casmurro" %}
-    <img class="capa-img" src="https://m.media-amazon.com/images/I/61x1ZHomWUL._SL1200_.jpg" alt="Dom Casmurro" style="padding:0; object-fit:cover;">
+    <img class="capa" src="https://m.media-amazon.com/images/I/61x1ZHomWUL._SL1200_.jpg" alt="Capa Dom Casmurro" style="max-height: 500px; width: auto; max-width: 100%;">
     {% elif livro.titulo == "O Hobbit" %}
-    <img class="capa-img" src="https://m.media-amazon.com/images/I/91M9xPIf10L._SL1500_.jpg" alt="O Hobbit" style="padding:0; object-fit:cover;">
+    <img class="capa" src="https://m.media-amazon.com/images/I/91M9xPIf10L._SL1500_.jpg" alt="Capa O Hobbit" style="max-height: 500px; width: auto; max-width: 100%;">
     {% elif livro.capa %}
-    <img class="capa-img" src="{{ livro.capa.url }}" alt="{{ livro.titulo }}">
+    <img class="capa" src="{{ livro.capa.url }}" alt="Capa {{ livro.titulo }}" style="max-height: 500px; width: auto; max-width: 100%;">
     {% else %}
-    <div class="capa grande {{ livro.classe_capa }}"><span>{{ livro.titulo }}</span></div>
+    <div class="capa grande {{ livro.classe_capa }}" style="height: 500px; display: flex; align-items: center; justify-content: center;"><span>{{ livro.titulo }}</span></div>
     {% endif %}
   </div>
+
   <div class="info">
-    <h1>{{ livro.titulo }}</h1>
-    <p class="autor">{{ livro.autor }}</p>
-    <dl>
-      <dt>Categoria</dt><dd>{{ livro.categoria }}</dd>
-      <dt>ISBN</dt><dd>{{ livro.isbn }}</dd>
-      <dt>Ano de publicação</dt><dd>{{ livro.ano_publicacao }}</dd>
-      <dt>Páginas</dt><dd>{{ livro.num_paginas }}</dd>
-      <dt>Idioma</dt><dd>{{ livro.idioma }}</dd>
-      <dt>Em estoque</dt><dd>{{ livro.estoque }}</dd>
-      <dt>Avaliação</dt><dd>{% if media_avaliacao %}{{ media_avaliacao|floatformat:1 }} de 5{% else %}Sem avaliações{% endif %}</dd>
+    <h1 style="color: var(--cor-dourado-principal); margin-top: 0;">{{ livro.titulo }}</h1>
+    <p class="autor" style="font-size: 1.2rem; color: var(--cor-lilas); margin-bottom: 2rem;">{{ livro.autor }}</p>
+    
+    <dl style="display: grid; grid-template-columns: auto 1fr; gap: 0.5rem 1rem; margin-bottom: 2rem;">
+      <dt style="color: var(--cor-texto-suave);">Categoria</dt><dd style="margin: 0; font-weight: 600;">{{ livro.categoria }}</dd>
+      <dt style="color: var(--cor-texto-suave);">ISBN</dt><dd style="margin: 0;">{{ livro.isbn }}</dd>
+      <dt style="color: var(--cor-texto-suave);">Ano</dt><dd style="margin: 0;">{{ livro.ano_publicacao }}</dd>
+      <dt style="color: var(--cor-texto-suave);">Páginas</dt><dd style="margin: 0;">{{ livro.num_paginas }}</dd>
+      <dt style="color: var(--cor-texto-suave);">Idioma</dt><dd style="margin: 0;">{{ livro.idioma }}</dd>
+      <dt style="color: var(--cor-texto-suave);">Em estoque</dt><dd style="margin: 0;">{{ livro.estoque }}</dd>
+      <dt style="color: var(--cor-texto-suave);">Avaliação</dt><dd style="margin: 0; color: var(--cor-dourado-claro);">{% if media_avaliacao %}★ {{ media_avaliacao|floatformat:1 }} / 5{% else %}Sem avaliações{% endif %}</dd>
     </dl>
-    <p class="preco">R$ {{ livro.preco_final }}</p>
-    <p class="sinopse">{{ livro.descricao }}</p>
-    {% if user.is_authenticated %}
-    <form method="post" action="{% url 'adicionar_carrinho' livro.pk %}">
-      {% csrf_token %}<button class="botao">Adicionar ao carrinho</button>
-    </form>
-    <form method="post" action="{% url 'alternar_favorito' livro.pk %}">
-      {% csrf_token %}<button class="botao secundario">{% if favorito %}Remover dos favoritos{% else %}Favoritar{% endif %}</button>
-    </form>
-    <form method="post" action="{% url 'salvar_estante' livro.pk %}">
-      {% csrf_token %}
-      <select name="status" aria-label="Minha estante">
-        {% for codigo, nome in estados %}<option value="{{ codigo }}"{% if estante.status == codigo %} selected{% endif %}>{{ nome }}</option>{% endfor %}
-        <option value="remover">Tirar da estante</option>
-      </select>
-      <button class="botao secundario">Salvar na estante</button>
-    </form>
-    {% else %}
-    <a class="botao" href="{% url 'login' %}">Entre para comprar</a>
-    {% endif %}
+
+    <p class="preco" style="font-size: 2.2rem; font-weight: 700; color: var(--cor-dourado-claro); margin-bottom: 1.5rem;">R$ {{ livro.preco_final }}</p>
+    
+    <div style="background: var(--cor-fundo-secundario); padding: 1.5rem; border-radius: 8px; border-left: 4px solid var(--cor-roxo-destaque); margin-bottom: 2rem;">
+      <p class="sinopse" style="margin: 0; color: var(--cor-texto-secundario); line-height: 1.8;">{{ livro.descricao }}</p>
+    </div>
+
+    <div class="acoes" style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: center;">
+      {% if user.is_authenticated %}
+      <form method="post" action="{% url 'adicionar_carrinho' livro.pk %}" style="margin: 0;">
+        {% csrf_token %}
+        <button type="submit" class="botao">Adicionar ao carrinho</button>
+      </form>
+      
+      <form method="post" action="{% url 'alternar_favorito' livro.pk %}" style="margin: 0;">
+        {% csrf_token %}
+        <button type="submit" class="botao secundario" style="padding: 0.8rem;">
+          {% if favorito %}❤️ Remover{% else %}🤍 Favoritar{% endif %}
+        </button>
+      </form>
+      
+      <form method="post" action="{% url 'salvar_estante' livro.pk %}" style="margin: 0; display: flex; gap: 0.5rem; width: 100%; margin-top: 1rem;">
+        {% csrf_token %}
+        <select name="status" aria-label="Minha estante" style="padding: 0.8rem; border-radius: 8px; background: var(--cor-fundo-secundario); color: var(--cor-texto-principal); border: 1px solid var(--cor-roxo-principal); flex: 1;">
+          {% for codigo, nome in estados %}
+          <option value="{{ codigo }}"{% if estante.status == codigo %} selected{% endif %}>{{ nome }}</option>
+          {% endfor %}
+          <option value="remover">Tirar da estante</option>
+        </select>
+        <button type="submit" class="botao secundario">Salvar</button>
+      </form>
+      {% else %}
+      <a class="botao" href="{% url 'login' %}">Entre para comprar ou favoritar</a>
+      {% endif %}
+    </div>
   </div>
 </article>
-<section class="avaliacoes">
-  <h2>Avaliações</h2>
-  {% for post in avaliacoes %}
-  <div class="pedido"><strong>@{{ post.usuario.username }}</strong> · nota {{ post.nota }}/5<p>{{ post.texto }}</p></div>
-  {% empty %}
-  <p class="vazio">Ninguém avaliou este livro ainda.</p>
-  {% endfor %}
+
+<section class="avaliacoes" style="margin-top: 4rem;">
+  <h2 class="secao">Avaliações da Comunidade</h2>
+  <div style="display: grid; gap: 1rem;">
+    {% for post in avaliacoes %}
+    <div class="pedido" style="background: var(--cor-paineis); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--cor-azul-roxo);">
+      <strong style="color: var(--cor-lilas);">@{{ post.usuario.username }}</strong> 
+      <span style="color: var(--cor-dourado-principal);">· Nota {{ post.nota }}/5</span>
+      <p style="margin-top: 1rem; font-style: italic; color: var(--cor-texto-principal);">"{{ post.texto }}"</p>
+    </div>
+    {% empty %}
+    <p class="vazio" style="color: var(--cor-texto-suave);">Ninguém avaliou este livro ainda. Seja o primeiro!</p>
+    {% endfor %}
+  </div>
 </section>
 {% endblock %}
