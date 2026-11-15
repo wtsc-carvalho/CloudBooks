@@ -1,62 +1,101 @@
 {% extends "home.html" %}
 {% block titulo %}Clube de leitura{% endblock %}
 {% block conteudo %}
-<h1>Clube de leitura</h1>
-<section class="rankings">
-  <div>
-    <h2>Livro do mês</h2>
-    {% if do_mes %}<a href="{% url 'livro' do_mes.pk %}">{{ do_mes.titulo }}</a>{% else %}<p>Nenhuma indicação neste mês.</p>{% endif %}
-  </div>
-  <div>
-    <h2>Mais lidos</h2>
-    <ol>{% for livro in mais_lidos %}<li><a href="{% url 'livro' livro.pk %}">{{ livro.titulo }}</a></li>{% empty %}<li>Nenhuma leitura registrada ainda.</li>{% endfor %}</ol>
-  </div>
-</section>
-<section class="feed">
-  {% for post in posts %}
-  <article class="post">
-    {% if post.livro.titulo == "Coraline" %}
-    <img class="capa" src="https://m.media-amazon.com/images/I/91DZobBc1BL._SL1500_.jpg" alt="Coraline" style="padding:0; object-fit:cover;">
-    {% elif post.livro.titulo == "A Ilha do Tesouro" %}
-    <img class="capa" src="https://m.media-amazon.com/images/I/91n-D9eAH0L._SL1500_.jpg" alt="A Ilha do Tesouro" style="padding:0; object-fit:cover;">
-    {% elif post.livro.titulo == "Os Miseráveis" %}
-    <img class="capa" src="https://m.media-amazon.com/images/I/71L28YvPobL._SL1026_.jpg" alt="Os Miseráveis" style="padding:0; object-fit:cover;">
-    {% elif post.livro.titulo == "Fahrenheit 451" %}
-    <img class="capa" src="https://m.media-amazon.com/images/I/51tAD6LyZ-L._SL1360_.jpg" alt="Fahrenheit 451" style="padding:0; object-fit:cover;">
-    {% elif post.livro.titulo == "Drácula" %}
-    <img class="capa" src="https://m.media-amazon.com/images/I/61gfnGu9cTL._SL1200_.jpg" alt="Drácula" style="padding:0; object-fit:cover;">
-    {% elif post.livro.titulo == "Neuromancer" %}
-    <img class="capa" src="https://m.media-amazon.com/images/I/51TMmMNtZiL._SY445_SX342_ML2_.jpg" alt="Neuromancer" style="padding:0; object-fit:cover;">
-    {% elif post.livro.titulo == "O Silêncio dos Inocentes" %}
-    <img class="capa" src="https://m.media-amazon.com/images/I/81WFnxxa7kL._SL1500_.jpg" alt="O Silêncio dos Inocentes" style="padding:0; object-fit:cover;">
-    {% elif post.livro.titulo == "Hábitos Atômicos" %}
-    <img class="capa" src="https://m.media-amazon.com/images/I/81eT2pjx4jL._SL1500_.jpg" alt="Hábitos Atômicos" style="padding:0; object-fit:cover;">
-    {% elif post.livro.titulo == "Dom Casmurro" %}
-    <img class="capa" src="https://m.media-amazon.com/images/I/61x1ZHomWUL._SL1200_.jpg" alt="Dom Casmurro" style="padding:0; object-fit:cover;">
-    {% elif post.livro.titulo == "O Hobbit" %}
-    <img class="capa" src="https://m.media-amazon.com/images/I/91M9xPIf10L._SL1500_.jpg" alt="O Hobbit" style="padding:0; object-fit:cover;">
-    {% elif post.livro.capa %}
-    <img class="capa" src="{{ post.livro.capa.url }}" alt="{{ post.livro.titulo }}" style="padding:0; object-fit:cover;">
-    {% else %}
-    <div class="capa {{ post.livro.classe_capa }}"><span>{{ post.livro.titulo }}</span></div>
-    {% endif %}
-    <div>
-      <p class="autor">@{{ post.usuario.username }} · nota {{ post.nota }}/5</p>
-      <h3><a href="{% url 'livro' post.livro.pk %}">{{ post.livro.titulo }}</a></h3>
-      <p>{{ post.texto }}</p>
+<h1 class="titulo-glow" style="margin-bottom: 2rem;">
+  <svg width="32" height="32" fill="var(--cor-dourado-principal)" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+  Clube de Leitura
+</h1>
+
+<div class="clube-layout">
+  
+  <!-- Sidebar Esquerda -->
+  <aside class="clube-sidebar">
+    <div class="clube-painel">
+      <h2>Livro do Mês</h2>
+      {% if do_mes %}
+        <a href="{% url 'livro' do_mes.pk %}">{{ do_mes.titulo }}</a>
+      {% else %}
+        <p style="margin:0; color:var(--cor-texto-suave);">Nenhuma indicação neste mês.</p>
+      {% endif %}
     </div>
-  </article>
-  {% empty %}
-  <p class="post vazio">Nenhuma indicação ainda. Seja o primeiro a indicar um livro.</p>
-  {% endfor %}
-</section>
-{% if user.is_authenticated %}
-<form class="formulario novo-post" method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button class="botao">Publicar indicação</button>
-</form>
-{% else %}
-<p><a href="{% url 'login' %}">Entre</a> para indicar um livro.</p>
-{% endif %}
+
+    <div class="clube-painel">
+      <h2>Mais Lidos</h2>
+      <ol>
+        {% for livro in mais_lidos %}
+          <li><a href="{% url 'livro' livro.pk %}">{{ livro.titulo }}</a></li>
+        {% empty %}
+          <li>Nenhuma leitura registrada ainda.</li>
+        {% endfor %}
+      </ol>
+    </div>
+  </aside>
+
+  <!-- Feed Principal (Direita) -->
+  <section class="clube-feed">
+    {% for post in posts %}
+    <article class="clube-post">
+      
+      <!-- Lógica das Capas -->
+      {% if post.livro.titulo == "Coraline" %}
+      <img class="post-capa" src="https://m.media-amazon.com/images/I/91DZobBc1BL._SL1500_.jpg" alt="Coraline">
+      {% elif post.livro.titulo == "A Ilha do Tesouro" %}
+      <img class="post-capa" src="https://m.media-amazon.com/images/I/91n-D9eAH0L._SL1500_.jpg" alt="A Ilha do Tesouro">
+      {% elif post.livro.titulo == "Os Miseráveis" %}
+      <img class="post-capa" src="https://m.media-amazon.com/images/I/71L28YvPobL._SL1026_.jpg" alt="Os Miseráveis">
+      {% elif post.livro.titulo == "Fahrenheit 451" %}
+      <img class="post-capa" src="https://m.media-amazon.com/images/I/51tAD6LyZ-L._SL1360_.jpg" alt="Fahrenheit 451">
+      {% elif post.livro.titulo == "Drácula" %}
+      <img class="post-capa" src="https://m.media-amazon.com/images/I/61gfnGu9cTL._SL1200_.jpg" alt="Drácula">
+      {% elif post.livro.titulo == "Neuromancer" %}
+      <img class="post-capa" src="https://m.media-amazon.com/images/I/51TMmMNtZiL._SY445_SX342_ML2_.jpg" alt="Neuromancer">
+      {% elif post.livro.titulo == "O Silêncio dos Inocentes" %}
+      <img class="post-capa" src="https://m.media-amazon.com/images/I/81WFnxxa7kL._SL1500_.jpg" alt="O Silêncio dos Inocentes">
+      {% elif post.livro.titulo == "Hábitos Atômicos" %}
+      <img class="post-capa" src="https://m.media-amazon.com/images/I/81eT2pjx4jL._SL1500_.jpg" alt="Hábitos Atômicos">
+      {% elif post.livro.titulo == "Dom Casmurro" %}
+      <img class="post-capa" src="https://m.media-amazon.com/images/I/61x1ZHomWUL._SL1200_.jpg" alt="Dom Casmurro">
+      {% elif post.livro.titulo == "O Hobbit" %}
+      <img class="post-capa" src="https://m.media-amazon.com/images/I/91M9xPIf10L._SL1500_.jpg" alt="O Hobbit">
+      {% elif post.livro.capa %}
+      <img class="post-capa" src="{{ post.livro.capa.url }}" alt="{{ post.livro.titulo }}">
+      {% else %}
+      <div class="post-capa capa-fallback-premium" style="display:flex; align-items:center; justify-content:center; background:var(--cor-paineis); text-align:center; padding:1rem; font-size:0.9rem;">
+        <span>{{ post.livro.titulo }}</span>
+      </div>
+      {% endif %}
+      
+      <!-- Conteúdo do Post -->
+      <div class="post-info">
+        <div class="post-autor">
+          <span>@{{ post.usuario.username }}</span>
+          <span>• Nota: ★ {{ post.nota }}/5</span>
+        </div>
+        <h3><a href="{% url 'livro' post.livro.pk %}">{{ post.livro.titulo }}</a></h3>
+        <p class="post-texto">"{{ post.texto }}"</p>
+      </div>
+
+    </article>
+    {% empty %}
+    <div class="clube-painel" style="text-align: center;">
+      <p style="color: var(--cor-texto-suave);">Nenhuma indicação ainda. Seja o primeiro a indicar um livro!</p>
+    </div>
+    {% endfor %}
+
+    <!-- Formulário de Indicação (Embaixo do Feed) -->
+    <div class="clube-formulario">
+      <h2>Faça sua indicação</h2>
+      {% if user.is_authenticated %}
+      <form class="formulario" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn-gold" style="margin-top: 1rem; width: 100%;">Publicar indicação</button>
+      </form>
+      {% else %}
+      <p><a href="{% url 'login' %}">Faça login</a> para indicar um livro à comunidade.</p>
+      {% endif %}
+    </div>
+
+  </section>
+</div>
 {% endblock %}
