@@ -1,36 +1,26 @@
 {% extends "home.html" %}
 {% block titulo %}Favoritos{% endblock %}
 {% block conteudo %}
+<div class="btn-voltar-container">
+  <a href="{% url 'home' %}" class="link-voltar">
+    ← Voltar para a loja
+  </a>
+</div>
+
 <h1 class="secao">Meus Favoritos</h1>
 
 <div class="grade">
   {% for fav in favoritos %}
   <article class="card">
     <a href="{% url 'livro' fav.livro.pk %}">
-      {% if fav.livro.titulo == "Coraline" %}
-      <img class="capa" src="https://m.media-amazon.com/images/I/91DZobBc1BL._SL1500_.jpg" alt="Capa Coraline">
-      {% elif fav.livro.titulo == "A Ilha do Tesouro" %}
-      <img class="capa" src="https://m.media-amazon.com/images/I/91n-D9eAH0L._SL1500_.jpg" alt="Capa A Ilha do Tesouro">
-      {% elif fav.livro.titulo == "Os Miseráveis" %}
-      <img class="capa" src="https://m.media-amazon.com/images/I/71L28YvPobL._SL1026_.jpg" alt="Capa Os Miseráveis">
-      {% elif fav.livro.titulo == "Fahrenheit 451" %}
-      <img class="capa" src="https://m.media-amazon.com/images/I/51tAD6LyZ-L._SL1360_.jpg" alt="Capa Fahrenheit 451">
-      {% elif fav.livro.titulo == "Drácula" %}
-      <img class="capa" src="https://m.media-amazon.com/images/I/61gfnGu9cTL._SL1200_.jpg" alt="Capa Drácula">
-      {% elif fav.livro.titulo == "Neuromancer" %}
-      <img class="capa" src="https://m.media-amazon.com/images/I/51TMmMNtZiL._SY445_SX342_ML2_.jpg" alt="Capa Neuromancer">
-      {% elif fav.livro.titulo == "O Silêncio dos Inocentes" %}
-      <img class="capa" src="https://m.media-amazon.com/images/I/81WFnxxa7kL._SL1500_.jpg" alt="Capa O Silêncio dos Inocentes">
-      {% elif fav.livro.titulo == "Hábitos Atômicos" %}
-      <img class="capa" src="https://m.media-amazon.com/images/I/81eT2pjx4jL._SL1500_.jpg" alt="Capa Hábitos Atômicos">
-      {% elif fav.livro.titulo == "Dom Casmurro" %}
-      <img class="capa" src="https://m.media-amazon.com/images/I/61x1ZHomWUL._SL1200_.jpg" alt="Capa Dom Casmurro">
-      {% elif fav.livro.titulo == "O Hobbit" %}
-      <img class="capa" src="https://m.media-amazon.com/images/I/91M9xPIf10L._SL1500_.jpg" alt="Capa O Hobbit">
+      {% if fav.livro.capa_url %}
+      <img class="capa" src="{{ fav.livro.capa_url }}" alt="Capa {{ fav.livro.titulo }}">
       {% elif fav.livro.capa %}
       <img class="capa" src="{{ fav.livro.capa.url }}" alt="Capa {{ fav.livro.titulo }}">
       {% else %}
-      <div class="capa {{ fav.livro.classe_capa }} flex-center"><span>{{ fav.livro.titulo }}</span></div>
+      <div class="capa capa-fallback">
+        <span>{{ fav.livro.titulo }}</span>
+      </div>
       {% endif %}
       
       <h3>{{ fav.livro.titulo }}</h3>
@@ -38,31 +28,31 @@
     
     <p class="preco">R$ {{ fav.livro.preco_final }}</p>
     
-    <form method="post" action="{% url 'alternar_favorito' fav.livro.pk %}" data-confirma="Remover dos favoritos?" style="margin-top: auto;">
+    <form method="post" action="{% url 'alternar_favorito' fav.livro.pk %}" data-confirma="Remover dos favoritos?" class="btn-remover-fav-form">
       {% csrf_token %}
       <input type="hidden" name="next" value="{% url 'favoritos' %}">
-      <button type="submit" class="botao pequeno secundario" style="width: 100%; border-color: var(--cor-erro); color: var(--cor-erro);">Remover</button>
+      <button type="submit" class="botao pequeno secundario btn-remover-fav">Remover</button>
     </form>
   </article>
   {% empty %}
-  <div style="grid-column: 1 / -1; text-align: center; padding: 4rem 0;">
-    <p class="vazio" style="color: var(--cor-texto-suave); font-size: 1.2rem;">Nenhum favorito ainda. Toque no coração de um livro para guardá-lo aqui.</p>
+  <div class="favoritos-vazio">
+    <p class="vazio-texto">Nenhum favorito ainda. Toque no coração de um livro para guardá-lo aqui.</p>
   </div>
   {% endfor %}
 </div>
 
-<h2 class="secao" style="margin-top: 4rem;">Minha Estante Virtual</h2>
-<div class="estante" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+<h2 class="secao estante-titulo-secao">Minha Estante Virtual</h2>
+<div class="estante-grid">
   {% for nome, itens in colunas %}
-  <section class="coluna" style="background: var(--cor-paineis); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--cor-roxo-principal);">
-    <h3 style="color: var(--cor-dourado-principal); margin-top: 0; border-bottom: 1px solid var(--cor-azul-roxo); padding-bottom: 0.5rem; text-align: center;">{{ nome }}</h3>
-    <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.8rem; margin-top: 1rem;">
+  <section class="estante-coluna">
+    <h3 class="estante-titulo">{{ nome }}</h3>
+    <ul class="estante-lista">
       {% for item in itens %}
-      <li style="background: var(--cor-fundo-secundario); padding: 0.8rem; border-radius: 6px; border-left: 3px solid var(--cor-lilas);">
-        <a href="{% url 'livro' item.livro.pk %}" style="display: block; color: var(--cor-texto-principal); font-weight: 600;">{{ item.livro.titulo }}</a>
+      <li class="estante-item">
+        <a href="{% url 'livro' item.livro.pk %}" class="estante-link">{{ item.livro.titulo }}</a>
       </li>
       {% empty %}
-      <li><p class="vazio" style="color: var(--cor-texto-suave); text-align: center; font-style: italic;">Nenhum livro aqui.</p></li>
+      <li><p class="estante-vazio">Nenhum livro aqui.</p></li>
       {% endfor %}
     </ul>
   </section>

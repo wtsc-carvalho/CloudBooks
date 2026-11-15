@@ -1,29 +1,15 @@
 <article class="card">
   <a href="{% url 'livro' livro.pk %}">
-    {% if livro.titulo == "Coraline" %}
-    <img class="capa" src="https://m.media-amazon.com/images/I/91DZobBc1BL._SL1500_.jpg" alt="Capa do livro Coraline">
-    {% elif livro.titulo == "A Ilha do Tesouro" %}
-    <img class="capa" src="https://m.media-amazon.com/images/I/91n-D9eAH0L._SL1500_.jpg" alt="Capa do livro A Ilha do Tesouro">
-    {% elif livro.titulo == "Os Miseráveis" %}
-    <img class="capa" src="https://m.media-amazon.com/images/I/71L28YvPobL._SL1026_.jpg" alt="Capa do livro Os Miseráveis">
-    {% elif livro.titulo == "Fahrenheit 451" %}
-    <img class="capa" src="https://m.media-amazon.com/images/I/51tAD6LyZ-L._SL1360_.jpg" alt="Capa do livro Fahrenheit 451">
-    {% elif livro.titulo == "Drácula" %}
-    <img class="capa" src="https://m.media-amazon.com/images/I/61gfnGu9cTL._SL1200_.jpg" alt="Capa do livro Drácula">
-    {% elif livro.titulo == "Neuromancer" %}
-    <img class="capa" src="https://m.media-amazon.com/images/I/51TMmMNtZiL._SY445_SX342_ML2_.jpg" alt="Capa do livro Neuromancer">
-    {% elif livro.titulo == "O Silêncio dos Inocentes" %}
-    <img class="capa" src="https://m.media-amazon.com/images/I/81WFnxxa7kL._SL1500_.jpg" alt="Capa do livro O Silêncio dos Inocentes">
-    {% elif livro.titulo == "Hábitos Atômicos" %}
-    <img class="capa" src="https://m.media-amazon.com/images/I/81eT2pjx4jL._SL1500_.jpg" alt="Capa do livro Hábitos Atômicos">
-    {% elif livro.titulo == "Dom Casmurro" %}
-    <img class="capa" src="https://m.media-amazon.com/images/I/61x1ZHomWUL._SL1200_.jpg" alt="Capa do livro Dom Casmurro">
-    {% elif livro.titulo == "O Hobbit" %}
-    <img class="capa" src="https://m.media-amazon.com/images/I/91M9xPIf10L._SL1500_.jpg" alt="Capa do livro O Hobbit">
+    
+    {% if livro.capa_url %}
+      <img class="capa" src="{{ livro.capa_url }}" alt="Capa do livro {{ livro.titulo }}">
     {% elif livro.capa %}
-    <img class="capa" src="{{ livro.capa.url }}" alt="Capa do livro {{ livro.titulo }}">
+      <img class="capa" src="{{ livro.capa.url }}" alt="Capa do livro {{ livro.titulo }}">
     {% else %}
-    <div class="capa {{ livro.classe_capa }} flex-center"><span>{{ livro.titulo }}</span></div>
+      <!-- Capa gerada via CSS que NUNCA quebra o layout -->
+      <div class="capa" style="display: flex; align-items: center; justify-content: center; padding: 1.5rem; background: var(--cor-paineis); border: 2px solid var(--cor-roxo-principal); border-radius: 8px; color: var(--cor-dourado-claro); font-weight: bold; text-align: center; box-shadow: inset 0 0 20px rgba(0,0,0,0.5);">
+        <span>{{ livro.titulo }}</span>
+      </div>
     {% endif %}
     
     <h3>{{ livro.titulo }}</h3>

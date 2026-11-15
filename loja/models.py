@@ -38,6 +38,10 @@ class Livro(models.Model):
     preco = models.DecimalField(max_digits=8, decimal_places=2)
     estoque = models.PositiveIntegerField("quantidade em estoque", default=0)
     capa = models.ImageField("capa", upload_to="capas/", blank=True, null=True)
+    
+    # Campo adicionado para suportar links externos (como os da Amazon)
+    capa_url = models.URLField(max_length=500, blank=True, null=True)
+    
     criado_em = models.DateTimeField(auto_now_add=True)
 
     class Meta:
