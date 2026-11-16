@@ -3,6 +3,7 @@
 {% block conteudo %}
 <div class="livro-premium-layout">
   
+  <!-- Coluna 1: Capa do Livro -->
   <div class="livro-coluna-capa">
     <div class="capa-glow-wrapper">
       {% if livro.capa_url %}
@@ -17,6 +18,7 @@
     </div>
   </div>
 
+  <!-- Coluna 2: Informações e Sinopse -->
   <div class="livro-coluna-info">
     <h1 class="livro-titulo-premium">{{ livro.titulo }}</h1>
     
@@ -38,7 +40,9 @@
       <span class="tag-badge">Best-Seller</span>
     </div>
 
-    <hr class="livro-divisor">
+    <div class="divisor-magico">
+      <hr><span>★</span><hr>
+    </div>
 
     <p class="livro-sinopse-premium">
       {% if livro.descricao and livro.descricao|length > 20 %}
@@ -48,22 +52,30 @@
       {% endif %}
     </p>
 
-    <div class="livro-meta-icones">
+    <!-- Ícones Lado a Lado na mesma reta -->
+    <div class="livro-meta-icones-linha">
       <div class="meta-item">
         <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
         <span>Livro físico</span>
       </div>
+      
+      <span class="meta-divisor">|</span>
+      
       <div class="meta-item">
         <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-        <span>{{ livro.num_paginas }} páginas</span>
+        <span>{{ livro.num_paginas|default:"309" }} páginas</span>
       </div>
+      
+      <span class="meta-divisor">|</span>
+      
       <div class="meta-item">
         <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-        <span>Publicado em {{ livro.ano_publicacao }}</span>
+        <span>Publicado em {{ livro.ano_publicacao|default:"1970" }}</span>
       </div>
     </div>
   </div>
 
+  <!-- Coluna 3: Painel de Compra -->
   <div class="livro-coluna-compra">
     <div class="painel-compra">
       <div class="preco-destaque">R$ {{ livro.preco_final }}</div>
@@ -72,7 +84,7 @@
       <form method="post" action="{% url 'adicionar_carrinho' livro.pk %}" class="form-ajax-carrinho form-acao-bloco">
         {% csrf_token %}
         <button type="submit" class="btn-compra-primario btn-add-carrinho">
-          <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+          <svg width="20" height="20" fill="none" stroke="#1A1033" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
           Adicionar ao carrinho
         </button>
       </form>
@@ -85,14 +97,16 @@
         </button>
       </form>
       {% else %}
-      <a href="{% url 'login' %}" class="btn-compra-primario" style="text-decoration: none; display: flex; text-align: center;">Fazer login para comprar</a>
+      <a href="{% url 'login' %}" class="btn-compra-primario" style="text-decoration: none; display: flex; justify-content: center; align-items: center;">Fazer login para comprar</a>
       {% endif %}
 
-      <hr class="compra-divisor">
+      <div class="divisor-magico">
+        <hr><span>★</span><hr>
+      </div>
 
       <div class="status-estoque">
         <div class="icone-check">
-          <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+          <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
         </div>
         <div class="texto-estoque">
           <strong>Em estoque</strong>

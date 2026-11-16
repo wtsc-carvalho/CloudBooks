@@ -1,62 +1,145 @@
 {% extends "home.html" %}
-{% block titulo %}Configurações{% endblock %}
+{% block titulo %}Configurações da Conta{% endblock %}
+
 {% block conteudo %}
-<div class="config-layout">
+<div class="dashboard-layout">
   
-  <aside>
-    <ul class="sidebar-menu">
-      <li><a href="#"><svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg> Meu Perfil</a></li>
-      <li><a href="#" class="ativo"><svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> Configurações</a></li>
-      <li><a href="{% url 'favoritos' %}"><svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg> Minha Biblioteca</a></li>
-      <li><a href="#" class="menu-desativado"><svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg> Meus Pedidos (Em breve)</a></li>
-      <li><a href="#" class="menu-desativado"><svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> Ajuda (Em breve)</a></li>
-    </ul>
+  <!-- MENU LATERAL DA CONTA -->
+  <aside class="dashboard-sidebar">
+    <nav class="sidebar-nav">
+      <a href="#perfil" class="nav-item"><svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg> Meu Perfil</a>
+      <a href="#senha" class="nav-item"><svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg> Segurança</a>
+      <a href="{% url 'favoritos' %}" class="nav-item"><svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg> Minha Biblioteca</a>
+      <a href="#pedidos" class="nav-item"><svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg> Meus Pedidos</a>
+      
+      <!-- O botão de Ajuda agora está ativo! -->
+      <a href="#ajuda" class="nav-item"><svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> Ajuda (FAQ)</a>
+    </nav>
     
-    <div class="btn-sair-container">
-      <form method="post" action="{% url 'sair' %}">
-        {% csrf_token %}
-        <button type="submit" class="btn-sair">
-          <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg> Sair
-        </button>
-      </form>
-    </div>
+    <hr class="sidebar-divisor">
+    
+    <form method="post" action="{% url 'sair' %}">
+      {% csrf_token %}
+      <button type="submit" class="nav-item btn-sair"><svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg> Sair</button>
+    </form>
   </aside>
 
-  <main>
-    <div class="config-header">
-      <svg width="32" height="32" fill="none" stroke="var(--cor-dourado-principal)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0..."></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-      <div>
-        <h1 class="config-titulo">Configurações</h1>
-        <p class="config-subtitulo">Personalize sua experiência no CloudBooks</p>
+  <!-- ÁREA PRINCIPAL DA CONTA -->
+  <main class="dashboard-main">
+    <header class="dashboard-header">
+      <h1>
+        <svg width="26" height="26" fill="none" stroke="var(--cor-dourado-principal)" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9c.26.6.8 1 1.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"></path></svg>
+        Configurações
+      </h1>
+      <p>Personalize sua experiência no CloudBooks</p>
+    </header>
+
+    <!-- PAINEL 1: EDITAR PERFIL -->
+    <section id="perfil" class="dashboard-panel">
+      <h2 class="panel-titulo">Editar Perfil</h2>
+      <form method="post" class="formulario-premium form-grid">
+        {% csrf_token %}
+        {{ perfil.as_p }}
+        <div class="form-actions">
+          <button type="submit" name="salvar_perfil" class="btn-gold">Salvar Alterações</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- PAINEL 2: SEGURANÇA E SENHA -->
+    <section id="senha" class="dashboard-panel">
+      <h2 class="panel-titulo">Segurança e Senha</h2>
+      <form method="post" class="formulario-premium" autocomplete="off">
+        {% csrf_token %}
+        <input type="password" style="display:none;" tabindex="-1" autocomplete="new-password" />
+        {{ senha.as_p }}
+        
+        <div class="form-actions">
+          <button type="submit" name="trocar_senha" class="btn-dark-outline">Atualizar Senha</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- PAINEL 3: MEUS PEDIDOS -->
+    <section id="pedidos" class="dashboard-panel">
+      <h2 class="panel-titulo">Meus Pedidos</h2>
+      {% if pedidos %}
+        <div class="pedidos-lista">
+          {% for pedido in pedidos %}
+          <div class="pedido-card">
+            <div class="pedido-header">
+              <div class="pedido-id-data">
+                <strong>Pedido #{{ pedido.pk|stringformat:"05d" }}</strong>
+                <span class="pedido-data">{% if pedido.criado_em %}{{ pedido.criado_em|date:"d/m/Y \à\s H:i" }}{% else %}Recente{% endif %}</span>
+              </div>
+              <span class="badge-status">Confirmado</span>
+            </div>
+            <div class="pedido-corpo">
+              <div class="pedido-info">
+                <p><strong>Pagamento:</strong> {{ pedido.pagamento }}</p>
+                <p><strong>Entrega:</strong> {{ pedido.endereco }}</p>
+                <p class="pedido-total">Total: R$ {{ pedido.total }}</p>
+              </div>
+              <div class="pedido-itens">
+                <p class="itens-titulo">Itens adquiridos:</p>
+                <ul class="itens-lista">
+                  {% for item in pedido.itens.all %}
+                  <li>
+                    <span>{{ item.quantidade }}x {{ item.livro.titulo }}</span>
+                    <span class="item-preco">R$ {{ item.preco_unitario }}</span>
+                  </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+            <div class="pedido-acoes">
+              <a href="{% url 'confirmacao' pedido.pk %}" class="btn-dark-outline btn-pequeno">Ver Recibo Oficial</a>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="vazio-pedidos">
+          <svg width="48" height="48" fill="none" stroke="var(--cor-dourado-principal)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+          <p>Você ainda não fez nenhum pedido.</p>
+          <a href="{% url 'home' %}" class="btn-gold" style="display: inline-flex;">Explorar o Catálogo</a>
+        </div>
+      {% endif %}
+    </section>
+
+    <!-- PAINEL 4: AJUDA (FAQ) -->
+    <section id="ajuda" class="dashboard-panel">
+      <h2 class="panel-titulo">Central de Ajuda (FAQ)</h2>
+      <div class="faq-lista">
+        
+        <div class="faq-item">
+          <h3>1. Como faço para rastrear o meu pedido?</h3>
+          <p>Você pode acompanhar o status do seu pedido acessando a aba "Meus Pedidos" aqui mesmo no seu painel. Assim que o livro for despachado, o código de rastreio aparecerá no recibo oficial.</p>
+        </div>
+        
+        <div class="faq-item">
+          <h3>2. Posso alterar o endereço de entrega após finalizar a compra?</h3>
+          <p>Pedidos podem ter o endereço alterado em até 2 horas após a confirmação do pagamento. Após esse período, o processo de separação é iniciado e não é possível realizar mudanças logísticas.</p>
+        </div>
+        
+        <div class="faq-item">
+          <h3>3. Como funciona a interação no Clube de Leitura?</h3>
+          <p>Qualquer usuário com conta ativa pode indicar livros que já tenha lido. Vá até o Clube de Leitura pelo menu superior, avalie a obra e deixe um comentário. As melhores resenhas destacam-se no topo da comunidade.</p>
+        </div>
+        
+        <div class="faq-item">
+          <h3>4. Qual o prazo para devolução ou troca de um livro físico?</h3>
+          <p>Você tem até 7 dias corridos após o recebimento do livro para solicitar a devolução ou troca em caso de arrependimento ou defeitos de fabricação.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>5. O que faço se o livro chegar danificado?</h3>
+          <p>Lamentamos imensamente! Tire uma foto da embalagem e do livro danificado e envie um e-mail para o nosso suporte oficial (suporte@cloudbooks.com) nas primeiras 48 horas após a entrega para providenciarmos um novo envio imediato.</p>
+        </div>
+
       </div>
-    </div>
+    </section>
 
-    <div class="glass-panel config-section">
-      <h2 class="config-section-titulo">Editar Perfil</h2>
-      <form method="post" class="formulario config-form">
-        {% csrf_token %}
-        <div class="config-form-grid">
-          {{ perfil.as_p }}
-        </div>
-        <div class="config-form-actions">
-          <button type="submit" class="btn-gold" name="salvar_perfil" value="1">✓ Salvar Alterações</button>
-        </div>
-      </form>
-    </div>
-
-    <div class="glass-panel config-section">
-      <h2 class="config-section-titulo">Privacidade e Senha</h2>
-      <form method="post" class="formulario config-form">
-        {% csrf_token %}
-        <div class="config-form-grid">
-          {{ senha.as_p }}
-        </div>
-        <div class="config-form-actions">
-          <button type="submit" class="btn-dark-outline" name="trocar_senha" value="1">Atualizar Senha</button>
-        </div>
-      </form>
-    </div>
-    
   </main>
 </div>
 {% endblock %}
